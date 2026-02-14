@@ -1,0 +1,15 @@
+section {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10vh 8vw;
+    position: relative;
+}
+
+.section-inner {
+    width: 100%;
+    max-width: 900px;
+}

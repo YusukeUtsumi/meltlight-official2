@@ -1,0 +1,95 @@
+#hero {
+    position: relative;
+    overflow: hidden;
+}
+
+/* キャッチコピー中央 */
+.hero-title {
+    position: relative;
+    z-index: 3;
+
+    text-align: center;
+
+    font-family: "Times New Roman", Times, serif;
+
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+    font-weight: 400;
+
+    color: #333333;
+
+    opacity: 0;
+    transform: translateY(6px);
+
+    animation: titleFadeIn 3.269s ease forwards;
+    animation-delay: 0.6s;
+}
+
+@keyframes titleFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ベール全体 */
+.hero-veil {
+    position: absolute;
+    inset: -30%;
+    z-index: 1;
+}
+
+/* 布レイヤー共通 */
+.veil-layer {
+    position: absolute;
+    width: 180%;
+    height: 180%;
+    top: -40%;
+    left: -40%;
+
+    background: linear-gradient(
+        120deg,
+        rgba(160,160,160,0.35),
+        rgba(210,210,210,0.08),
+        rgba(160,160,160,0.35)
+    );
+
+    filter: blur(110px);
+}
+
+/* 手前の布 */
+.layer1 {
+    animation: clothMove1 20s ease-in-out infinite alternate;
+}
+
+/* 奥の布 */
+.layer2 {
+    animation: clothMove2 26s ease-in-out infinite alternate;
+    opacity: 0.7;
+}
+
+/* 波打つ動き */
+@keyframes clothMove1 {
+    0% {
+        transform: translateX(-8%) translateY(-4%) rotate(0deg) scale(1);
+    }
+    50% {
+        transform: translateX(4%) translateY(6%) rotate(1.5deg) scale(1.05);
+    }
+    100% {
+        transform: translateX(8%) translateY(-2%) rotate(2deg) scale(1);
+    }
+}
+
+@keyframes clothMove2 {
+    0% {
+        transform: translateX(6%) translateY(-6%) rotate(0deg) scale(1);
+    }
+    50% {
+        transform: translateX(-4%) translateY(4%) rotate(-1deg) scale(1.04);
+    }
+    100% {
+        transform: translateX(-6%) translateY(6%) rotate(-2deg) scale(1);
+    }
+}
