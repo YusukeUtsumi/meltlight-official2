@@ -13,9 +13,9 @@ html, body {
     /* 白 → 深淵 */
     background: linear-gradient(
         to bottom,
-        #f4f5f6 0%,
-        #e8e9eb 20%,
-        #999999 50%,
+        #eaebeb 0%,
+        #cbcccc 20%,
+        #828282 50%,
         #2a2a2a 80%,
         #151515 100%
     );
@@ -25,4 +25,13 @@ html, body {
 
 html {
     scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    scroll-snap-type: y mandatory;
+}
+
+section {
+    scroll-snap-align: start;
 }
