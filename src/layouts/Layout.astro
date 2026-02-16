@@ -1,12 +1,15 @@
 ---
 import "../styles/global.css";
 import "../styles/sections.css";
+import Header from "../components/Layout/Header.jsx";
+import Footer from "../components/sections/Footer.jsx";
+import Think from "../components/sections/Think.jsx"
 
 const { title = "MeltLight Official" } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="En">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,6 +20,10 @@ const { title = "MeltLight Official" } = Astro.props;
 </head>
 
 <body>
+    <div id="top"></div>
+    <Header client:load />
     <slot />
+    <Think client:load />
+    <Footer client:load />
 </body>
 </html>

@@ -46,9 +46,9 @@ export default function Hero() {
                         : "translateY(6px)"
                 }}
             >
-                If it’s ordinary,
+                What you see
                 <br />
-                I don’t build it.
+                is never where it begins.
             </h1>
         </Section>
     );

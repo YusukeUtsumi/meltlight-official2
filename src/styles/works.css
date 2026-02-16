@@ -36,18 +36,18 @@
 
 /* 配置（Z字構成） */
 .block-1 {
-    top: 18%;
-    left: 8%;
+    top: 14%;
+    left: 11%;
 }
 
 .block-2 {
-    top: 42%;
+    top: 43%;
     right: 10%;
     text-align: right;
 }
 
 .block-3 {
-    bottom: 16%;
+    bottom: 12%;
     left: 12%;
 }
 
@@ -61,18 +61,18 @@
     opacity: 0;
 }
 
-/* 1つ目：完成形 */
+/* 1つ目：完成形（少し拡大） */
 .block-1 .work-title {
     font-family: "Times New Roman", Times, serif;
     font-weight: 400;
-    font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
 }
 
-/* 2つ目：構造（主役） */
+/* 2つ目：構造（主役・最大） */
 .block-2 .work-title {
     font-family: "Inter", sans-serif;
     font-weight: 100;
-    font-size: clamp(2.6rem, 4vw, 3.6rem);
+    font-size: clamp(3.2rem, 5vw, 4.6rem);
 }
 
 /* 3つ目：宣言 */
@@ -80,6 +80,18 @@
     font-family: "Inter", sans-serif;
     font-weight: 600;
     font-size: clamp(1.4rem, 2vw, 1.8rem);
+}
+
+@media (min-width: 1600px) {
+
+    .block-1 .work-title {
+        font-size: 4.4rem;
+    }
+
+    .block-2 .work-title {
+        font-size: 6rem;
+    }
+
 }
 
 /* ========================= */

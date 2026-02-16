@@ -42,7 +42,7 @@ export default function About() {
                         </p>
 
                         <p className="about-role">
-                            AI Concept Artist / Conceptual Engineer
+                            Conceptual Digital Artist
                         </p>
 
                         <p className="about-role">
@@ -64,8 +64,8 @@ export default function About() {
                     </div>
 
                     <div className="about-button">
-                        <a href="#" className="mono-button">
-                            ENTER PORTFOLIO ARCHIVE
+                        <a href="https://meltlight.art/" target="_blank" rel="noopener noreferrer" className="mono-button">
+                            PORTFOLIO
                         </a>
                     </div>
 

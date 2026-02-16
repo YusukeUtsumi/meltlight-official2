@@ -1,0 +1,29 @@
+#footer {
+    background: #111010;
+    color: #e8e8e8;
+
+    padding: 60px 20px;
+
+    text-align: center;
+}
+
+.footer-logo {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 100;
+    font-size: 0.8rem;
+    letter-spacing: 0.6em;
+
+    margin-bottom: 20px;
+}
+
+.footer-copy {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+
+    margin-bottom: 10px;
+}
+
+.footer-note {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+}

@@ -1,0 +1,97 @@
+#contact {
+    height: 100vh;
+    color: #e8e8e8;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+}
+
+#contact.visible {
+    animation: contactFade 1.4s ease forwards;
+}
+
+.contact-inner {
+    text-align: center;
+}
+
+/* ========================= */
+/* H2                        */
+/* ========================= */
+
+.contact-heading {
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+
+    margin-bottom: 60px;
+}
+
+/* ========================= */
+/* ボタン（完全モノクロ）    */
+/* ========================= */
+
+.contact-button {
+    position: relative;
+
+    padding: 16px 48px;
+
+    background: transparent;
+    color: #e8e8e8;
+
+    border: 1px solid #555555;
+    border-radius: 40px;
+    text-decoration: none;
+
+    font-family: "Inter", sans-serif;
+    font-weight: 100;
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+
+    cursor: pointer;
+    overflow: hidden;
+
+    transition: border-color 0.4s ease, color 0.4s ease;
+}
+
+/* 光レイヤー */
+.contact-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: radial-gradient(
+        circle at center,
+        rgba(255,255,255,0.15),
+        rgba(255,255,255,0.0) 70%
+    );
+
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+/* ホバー */
+.contact-button:hover {
+    border-color: #888888;
+    color: #ffffff;
+}
+
+.contact-button:hover::before {
+    opacity: 1;
+}
+
+/* ========================= */
+/* Fade                      */
+/* ========================= */
+
+@keyframes contactFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

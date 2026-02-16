@@ -24,16 +24,16 @@ export default function Philosophy() {
     return (
         <Section id="philosophy">
             <div className="philosophy-text">
-                <p className={visible ? "show delay1" : ""}>Create.</p>
-                <p className={visible ? "show delay2" : ""}>Break.</p>
-                <p className={visible ? "show delay3" : ""}>Rebuild.</p>
+                <p className={visible ? "show delay1" : ""}>Before form, there is structure.</p>
+                <p className={visible ? "show delay2" : ""}>Before language, there is meaning.</p>
+                <p className={visible ? "show delay3" : ""}>silence becomes direction.</p>
 
                 <br />
 
                 <p className={visible ? "show delay4" : ""}>
-                    Efficiency fades.
+                    Nothing is placed
                     <br />
-                    Structure remains.
+                    without reason.
                 </p>
             </div>
         </Section>
