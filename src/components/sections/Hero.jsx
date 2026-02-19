@@ -48,7 +48,9 @@ export default function Hero() {
             >
                 What you see
                 <br />
-                is never where it begins.
+                is never 
+                <br />
+                Where it begins.
             </h1>
         </Section>
     );

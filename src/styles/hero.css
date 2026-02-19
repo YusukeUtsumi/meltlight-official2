@@ -15,7 +15,7 @@
 
     font-family: "Times New Roman", Times, serif;
 
-    font-size: clamp(32px, 5vw, 64px);
+    font-size: clamp(40px, 6vw, 74px);
     line-height: 1.5;
     letter-spacing: 0.06em;
     font-weight: 400;
