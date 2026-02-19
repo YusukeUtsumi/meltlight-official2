@@ -62,3 +62,15 @@
 .nav a:hover {
     opacity: 0.6;
 }
+
+@media (max-width: 768px) {
+
+    .logo {
+        font-size: 0.6rem;
+    }
+
+    .nav a {
+        font-size: 0.5rem;
+    }
+
+}
