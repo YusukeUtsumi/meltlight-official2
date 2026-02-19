@@ -27,8 +27,8 @@ export default function Header() {
                 </a>
 
                 <nav className="nav">
-                    <a href="#works-art">Portfolio</a>
-                    <a href="#contact">Contact</a>
+                    <a href="https://meltlight.art/" target="_blank" rel="noopener noreferrer">Portfolio</a>
+                    <a href="https://tally.so/r/mRXxjj" target="_blank" rel="noopener noreferrer">Contact</a>
                 </nav>
 
             </div>
