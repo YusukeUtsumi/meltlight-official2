@@ -50,7 +50,7 @@ export default function Hero() {
                 <br />
                 is never 
                 <br />
-                Where it begins.
+                Where it Begins.
             </h1>
         </Section>
     );
