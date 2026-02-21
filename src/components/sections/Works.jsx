@@ -38,7 +38,7 @@ export default function Works() {
                 <div className="price">
                     <span className="from">from</span>
                     <span className="currency">$</span>
-                    <span className="amount">4,800</span>
+                    <span className="amount">4,500</span>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@ export default function Works() {
                 <div className="price">
                     <span className="from">from</span>
                     <span className="currency">$</span>
-                    <span className="amount">2,200</span>
+                    <span className="amount">2,000</span>
                 </div>
             </div>
 
@@ -60,7 +60,7 @@ export default function Works() {
                 <div className="price">
                     <span className="from">from</span>
                     <span className="currency">$</span>
-                    <span className="amount">1,400</span>
+                    <span className="amount">1,500</span>
                 </div>
             </div>
 
