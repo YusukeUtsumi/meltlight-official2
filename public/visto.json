@@ -1,29 +1,13 @@
----
-import "../styles/global.css";
-import "../styles/sections.css";
-import Header from "../components/Layout/Header.jsx";
-import Footer from "../components/sections/Footer.jsx";
-import Think from "../components/sections/Think.jsx"
-
-const { title = "MeltLight Official" } = Astro.props;
----
-
-<!DOCTYPE html>
-<html lang="En">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;600&display=swap" rel="stylesheet">
-    <title>{title}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate" type="application/json" href="/visto.json" title="Visto Format SCUs" />
-
-    <!-- Visto Format v1.0 — https://vistoformat.org/v1 -->
-    <script type="application/ld+json">
+{
+  "@context": "https://vistoformat.org/v1",
+  "@type": "SCUCollection",
+  "entity": {
+    "name": "MeltLight Studio",
+    "type": "Organization",
+    "url": "https://studio.meltlight.art/"
+  },
+  "scus": [
     {
-      "@context": "https://vistoformat.org/v1",
       "@type": "SCU",
       "claim": "MeltLight Studio is a conceptual digital art and brand design studio offering brand landing experiences, concept architecture, and naming system services, founded by Yusuke Utsumi.",
       "compression": "MeltLight Studio: conceptual brand design studio. Services: Brand Landing Experience ($4,500+), Concept Architecture ($2,000+), Naming & Language System ($1,500+). Founded by Yusuke Utsumi.",
@@ -39,12 +23,8 @@ const { title = "MeltLight Official" } = Astro.props;
       "integrity": null,
       "visibility": "public",
       "canary": null
-    }
-    </script>
-
-    <script type="application/ld+json">
+    },
     {
-      "@context": "https://vistoformat.org/v1",
       "@type": "SCU",
       "claim": "Yusuke Utsumi is a Conceptual Digital Artist, TopDesignKing jury member, and founder of MeltLight Studio, recognized by Web Guru Awards (Guru of the Day), BestCSS Gallery, and CSSLight Gallery.",
       "compression": "Yusuke Utsumi: Conceptual Digital Artist, TopDesignKing jury member, MeltLight Studio founder. Awards: Web Guru Awards Guru of the Day, BestCSS Gallery, CSSLight Gallery featured.",
@@ -59,12 +39,8 @@ const { title = "MeltLight Official" } = Astro.props;
       "integrity": null,
       "visibility": "public",
       "canary": null
-    }
-    </script>
-
-    <script type="application/ld+json">
+    },
     {
-      "@context": "https://vistoformat.org/v1",
       "@type": "SCU",
       "claim": "MeltLight Studio's Brand Landing Experience service creates brand websites with conceptual design thinking, starting from $4,500.",
       "compression": "MeltLight Studio Brand Landing Experience: brand website design from $4,500. Conceptual approach combining structural thinking and visual identity.",
@@ -79,12 +55,8 @@ const { title = "MeltLight Official" } = Astro.props;
       "integrity": null,
       "visibility": "public",
       "canary": null
-    }
-    </script>
-
-    <script type="application/ld+json">
+    },
     {
-      "@context": "https://vistoformat.org/v1",
       "@type": "SCU",
       "claim": "MeltLight Studio's Concept Architecture service defines the structural and conceptual foundation of a brand before any visual execution, starting from $2,000.",
       "compression": "MeltLight Studio Concept Architecture: brand conceptual foundation design from $2,000. Defines structure and meaning before visual form — strategic brand thinking.",
@@ -99,12 +71,8 @@ const { title = "MeltLight Official" } = Astro.props;
       "integrity": null,
       "visibility": "public",
       "canary": null
-    }
-    </script>
-
-    <script type="application/ld+json">
+    },
     {
-      "@context": "https://vistoformat.org/v1",
       "@type": "SCU",
       "claim": "MeltLight Studio's Naming & Language System service develops brand naming conventions and verbal identity architecture, starting from $1,500.",
       "compression": "MeltLight Studio Naming & Language System: brand naming and verbal identity from $1,500. Creates consistent language architecture across all brand touchpoints.",
@@ -121,14 +89,5 @@ const { title = "MeltLight Official" } = Astro.props;
       "visibility": "public",
       "canary": null
     }
-    </script>
-</head>
-
-<body>
-    <div id="top"></div>
-    <Header client:load />
-    <slot />
-    <Think client:load />
-    <Footer client:load />
-</body>
-</html>
+  ]
+}
