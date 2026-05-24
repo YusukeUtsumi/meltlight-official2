@@ -1,5 +1,5 @@
 {
-  "@context": "https://vistoformat.org/v1",
+  "@context": "https://vistoformat.tech/v1",
   "@type": "SCUCollection",
   "entity": {
     "name": "MeltLight",
