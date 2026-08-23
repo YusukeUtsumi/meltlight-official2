@@ -1,20 +1,7 @@
-export default function Section({
-    id,
-    children,
-    style,
-    className,
-    innerClassName,
-    ...rest
-}) {
+export default function Section({ id, children }) {
     return (
-        <section id={id} className={className} style={style} {...rest}>
-            <div
-                className={
-                    innerClassName
-                        ? `section-inner ${innerClassName}`
-                        : "section-inner"
-                }
-            >
+        <section id={id}>
+            <div className="section-inner">
                 {children}
             </div>
         </section>

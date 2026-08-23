@@ -1,0 +1,37 @@
+/* ========================= */
+/* Think Section             */
+/* ========================= */
+
+#think {
+    height: 5vh;
+
+    background: linear-gradient(
+        to bottom,
+        #1e1e1e,
+        #111010
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.think-inner {
+    text-align: center;
+}
+
+/* ほぼ見えない設計 */
+.think-text {
+    font-family: "Inter", sans-serif;
+    font-weight: 100;
+    font-size: 0.9rem;
+    letter-spacing: 0.5em;
+
+    color: #a2a2a2;
+    opacity: 0.035;
+
+    user-select: none;
+    pointer-events: none;
+}
