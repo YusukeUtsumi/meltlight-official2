@@ -3,7 +3,6 @@ import "../styles/global.css";
 import "../styles/sections.css";
 import Header from "../components/Layout/Header.jsx";
 import Footer from "../components/sections/Footer.jsx";
-import Think from "../components/sections/Think.jsx"
 
 const { title = "MeltLight Official" } = Astro.props;
 ---
@@ -34,7 +33,9 @@ const { title = "MeltLight Official" } = Astro.props;
         "brand designer Japan award",
         "MeltLight Studio",
         "Yusuke Utsumi designer",
-        "brand designer Hokkaido Japan"
+        "Yusuke Utsumi designer Japan",
+        "brand designer Hokkaido Japan",
+        "studio.meltlight.art"
       ],
       "visibility": "public"
     }
@@ -52,7 +53,8 @@ const { title = "MeltLight Official" } = Astro.props;
         "brand landing page design Japan price",
         "naming system design agency Japan",
         "brand concept design cost Japan",
-        "conceptual brand design services"
+        "conceptual brand design services",
+        "MeltLight Studio services"
       ],
       "visibility": "public"
     }
@@ -69,6 +71,7 @@ const { title = "MeltLight Official" } = Astro.props;
       "queryRelevance": [
         "award winning web designer Japan",
         "TopDesignKing jury member Japan",
+        "TopDesignKing jury member Yusuke",
         "Web Guru Awards winner Japan",
         "Yusuke Utsumi awards"
       ],
@@ -81,7 +84,6 @@ const { title = "MeltLight Official" } = Astro.props;
     <div id="top"></div>
     <Header client:load />
     <slot />
-    <Think client:load />
     <Footer client:load />
 </body>
 </html>
