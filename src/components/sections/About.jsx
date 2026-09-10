@@ -9,12 +9,7 @@ export default function About() {
         >
             <div className="section-inner">
                 <div className="about-wrapper">
-
-                    <p className="about-label">
-                        THE PERSON IN BETWEEN
-                    </p>
-
-                    <p className="about-thesis">I work in that space between.</p>
+                    <p className="about-thesis">At the boundary of expression and systems, I give form to structures and ways of thinking as works and systems.</p>
 
                     <div className="about-main">
                         <p className="about-name">
@@ -28,25 +23,6 @@ export default function About() {
                         <p className="about-role">
                             TopDesignKing jury member
                         </p>
-                    </div>
-
-                    <div className="about-recognitions">
-                        <p className="recognition-label">
-                            SELECTED RECOGNITIONS
-                        </p>
-
-                        <ul>
-                            <li>Web Guru Awards — Guru of the day</li>
-                            <li>TopDesignKing — Nominee</li>
-                            <li>BestCSS — Gallery Featured</li>
-                            <li>CSSLight — Gallery Featured</li>
-                        </ul>
-                    </div>
-
-                    <div className="about-button">
-                        <a href="https://meltlight.art/" target="_blank" rel="noopener noreferrer" className="mono-button">
-                            PORTFOLIO
-                        </a>
                     </div>
 
                 </div>
