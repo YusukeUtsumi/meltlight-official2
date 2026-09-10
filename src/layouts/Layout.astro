@@ -1,9 +1,10 @@
 ---
 import "../styles/global.css";
+import "../styles/depth.css";
+import DepthScene from "../components/DepthScene.jsx";
 import "../styles/sections.css";
 import Header from "../components/Layout/Header.jsx";
 import Footer from "../components/sections/Footer.jsx";
-import Think from "../components/sections/Think.jsx"
 
 const { title = "MeltLight Official" } = Astro.props;
 ---
@@ -78,10 +79,10 @@ const { title = "MeltLight Official" } = Astro.props;
 </head>
 
 <body>
+    <DepthScene client:load />
     <div id="top"></div>
-    <Header client:load />
-    <slot />
-    <Think client:load />
-    <Footer client:load />
+    <Header />
+    <main><slot /></main>
+    <Footer />
 </body>
 </html>

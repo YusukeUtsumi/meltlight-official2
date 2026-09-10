@@ -14,10 +14,6 @@ export default function Footer() {
                     © 2026 MeltLight
                 </div>
 
-                <div className="footer-note">
-                    The interface is only a pause in that breath.
-                </div>
-
             </div>
 
         </footer>

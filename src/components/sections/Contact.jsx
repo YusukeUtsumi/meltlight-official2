@@ -1,42 +1,20 @@
-import { useEffect, useRef, useState } from "react";
 import "../../styles/contact.css";
 
 export default function Contact() {
 
-    const [visible, setVisible] = useState(false);
-    const contactRef = useRef(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setVisible(true);
-                }
-            },
-            { threshold: 0.3 }
-        );
-
-        if (contactRef.current) {
-            observer.observe(contactRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, []);
-
     return (
         <section
             id="contact"
-            ref={contactRef}
-            className={visible ? "visible" : ""}
+            className="depth-section journey-frame journey-contact"
         >
             <div className="contact-inner">
 
-                <h2 className="contact-heading">
-                    When you are ready
-                </h2>
+                <p className="contact-kicker">BEGIN BEFORE THE ANSWER</p>
+                <h2 className="contact-heading">What is still<br />without a shape?</h2>
+                <p className="contact-note">Bring the question. We can begin there.</p>
 
                 <a href="https://tally.so/r/mRXxjj" className="contact-button" target="_blank" rel="noopener noreferrer">
-                    INQUIRE
+                    <span>INQUIRE</span>
                 </a>
 
             </div>

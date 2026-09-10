@@ -1,76 +1,77 @@
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-
-    padding: 20px 40px;
-
-    background: rgba(12, 12, 12, 0.6);
-    backdrop-filter: blur(8px);
-
-    color: #ffffff;
-
-    display: flex;
-    justify-content: center;
-
-    opacity: 0;
-    transition: opacity 0.6s ease;
-
-    z-index: 1000;
-}
-
-.header.visible {
-    opacity: 1;
+    position: absolute;
+    inset: 0 0 auto;
+    padding: 28px 4vw;
+    z-index: 10;
+    color: #323232;
 }
 
 .header-inner {
-    width: 100%;
-    max-width: 1200px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
 }
 
-/* ロゴ */
 .logo {
     font-family: "Times New Roman", Times, serif;
-    color: #e8e8e8;
-    font-weight: 100;
-    font-size: 1rem;
-    letter-spacing: 0.6em;
-
+    font-size: 13px;
+    letter-spacing: .35em;
     text-decoration: none;
 }
 
-/* ナビ */
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
 .nav a {
-    margin-left: 40px;
-
-    font-family: "Inter", sans-serif;
-    font-weight: 100;
-    font-size: 0.9rem;
-    letter-spacing: 0.25em;
-
-    color: #e8e8e8;
+    font-size: 11px;
+    letter-spacing: .08em;
     text-decoration: none;
-
-    transition: opacity 0.3s ease;
+    padding-block: 12px;
 }
 
 .nav a:hover {
-    opacity: 0.6;
+    text-decoration: underline;
 }
 
-@media (max-width: 768px) {
+.in-depth .header {
+    color: #eaebeb;
+    background: #151515ed;
+}
 
+@media(max-width: 768px) {
+    .header {
+        padding: 18px 7vw;
+    }
     .logo {
-        font-size: 0.6rem;
+        font-size: 11px;
+        letter-spacing: .18em;
     }
-
-    .nav a {
-        font-size: 0.5rem;
+    .nav {
+        gap: 18px;
     }
+}
 
+@media(prefers-reduced-motion: reduce) {
+    .header {
+        position: absolute;
+        color: #323232 !important;
+        background: none !important;
+    }
+}
+
+.depth-ready .header {
+    position: fixed;
+}
+
+@media(prefers-reduced-motion: reduce) {
+    .depth-ready .header {
+        position: absolute;
+    }
+}
+
+.nav a {
+    font-weight: 600;
 }

@@ -1,0 +1,78 @@
+.depth-scene {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 118svh;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 54% 48%, rgba(255, 255, 255, .84) 0 9%, rgba(209, 214, 214, .56) 32%, transparent 66%),
+        radial-gradient(ellipse at 12% 24%, #f0f1f0 0, transparent 45%),
+        #d7dada;
+}
+
+.depth-scene[data-ready="true"] {
+    position: fixed;
+    height: 100svh;
+}
+
+.depth-canvas,
+.fog-veil,
+.void-vignette {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.depth-canvas { display: block; }
+
+.fog-veil {
+    opacity: calc(.7 - var(--descent, 0) * .48);
+    filter: blur(28px);
+    mix-blend-mode: screen;
+    will-change: transform, opacity;
+}
+
+.fog-veil-one {
+    inset: -18%;
+    width: 136%;
+    height: 136%;
+    background:
+        radial-gradient(ellipse at 19% 38%, rgba(255, 255, 255, .42) 0 9%, transparent 33%),
+        radial-gradient(ellipse at 76% 64%, rgba(226, 234, 235, .28) 0 12%, transparent 39%);
+    animation: fogDriftOne 19s ease-in-out infinite alternate;
+}
+
+.fog-veil-two {
+    inset: -12%;
+    width: 124%;
+    height: 124%;
+    background:
+        radial-gradient(ellipse at 67% 22%, rgba(255, 255, 255, .3) 0 8%, transparent 34%),
+        radial-gradient(ellipse at 34% 82%, rgba(197, 210, 218, .24) 0 10%, transparent 37%);
+    animation: fogDriftTwo 24s ease-in-out -7s infinite alternate;
+}
+
+.void-vignette {
+    opacity: calc(var(--descent, 0) * .82);
+    background: radial-gradient(ellipse at 54% 49%, transparent 0 18%, rgba(0, 1, 6, .07) 42%, rgba(0, 1, 5, .88) 100%);
+}
+
+@keyframes fogDriftOne {
+    to { transform: translate3d(7%, -4%, 0) scale(1.08) rotate(2deg); }
+}
+
+@keyframes fogDriftTwo {
+    to { transform: translate3d(-6%, 5%, 0) scale(1.11) rotate(-3deg); }
+}
+
+@media (max-width: 700px) {
+    .fog-veil { filter: blur(18px); }
+    .void-vignette { background: radial-gradient(ellipse at 55% 49%, transparent 0 14%, rgba(0, 1, 6, .08) 40%, rgba(0, 1, 5, .9) 100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fog-veil { animation: none; }
+}

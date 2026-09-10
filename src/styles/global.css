@@ -1,37 +1,46 @@
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-html, body {
-    font-family: system-ui, -apple-system, sans-serif;
-    overflow-x: hidden;
-
-    /* 白 → 深淵 */
-    background: linear-gradient(
-        to bottom,
-        #eaebeb 0%,
-        #b2b4b4 20%,
-        #323232 50%,
-        #1e1e1e 80%,
-        #151515 100%
-    );
-
-    color: #000;
+:root {
+    --header-safe: 86px;
 }
 
 html {
-    scroll-behavior: smooth;
     font-size: 16px;
+    background: #080808;
+    overflow-x: clip;
+}
+
+html.depth-ready {
+    scroll-snap-type: none;
+    scroll-padding-top: 0;
 }
 
 body {
-    scroll-snap-type: y mandatory;
+    font-family: Inter, system-ui, sans-serif;
+    color: #eaebeb;
+    overflow-x: clip;
+    background: linear-gradient(#323232, #151515 55%, #080808 85%);
 }
 
-section {
-    scroll-snap-align: start;
+a {
+    color: inherit;
+    text-underline-offset: .3em;
+}
+
+a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 8px;
+}
+
+::selection {
+    background: #b2b4b4;
+    color: #080808;
+}
+
+main, #think, #footer {
+    position: relative;
 }

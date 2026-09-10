@@ -1,40 +1,20 @@
-import { useEffect, useRef, useState } from "react";
 import "../../styles/about.css";
 
 export default function About() {
 
-    const [visible, setVisible] = useState(false);
-    const aboutRef = useRef(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setVisible(true);
-                }
-            },
-            { threshold: 0.3 }
-        );
-
-        if (aboutRef.current) {
-            observer.observe(aboutRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, []);
-
     return (
         <section
             id="about"
-            ref={aboutRef}
-            className={visible ? "visible" : ""}
+            className="depth-section journey-frame"
         >
             <div className="section-inner">
                 <div className="about-wrapper">
 
                     <p className="about-label">
-                        ABOUT
+                        THE PERSON IN BETWEEN
                     </p>
+
+                    <p className="about-thesis">I work in that space between.</p>
 
                     <div className="about-main">
                         <p className="about-name">

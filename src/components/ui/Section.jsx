@@ -1,6 +1,6 @@
-export default function Section({ id, children }) {
+export default function Section({ id, children, className = "" }) {
     return (
-        <section id={id}>
+        <section id={id} className={className}>
             <div className="section-inner">
                 {children}
             </div>
