@@ -4,13 +4,6 @@
     padding-inline: 9vw;
 }
 
-.hero-kicker {
-    margin-bottom: 42px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: .28em;
-}
-
 .hero-title {
     position: relative;
     font-family: "Times New Roman", Times, serif;
@@ -21,26 +14,9 @@
     max-width: 1180px;
 }
 
-.hero-invitation {
-    position: absolute;
-    right: 9vw;
-    bottom: 14svh;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 15px;
-    letter-spacing: .05em;
-}
-
 @media(max-width: 768px) {
     #hero { padding-inline: 7vw; }
     .hero-title {
         font-size: clamp(42px, 10.8vw, 80px);
-    }
-    .hero-kicker {
-        max-width: 180px;
-        line-height: 1.6;
-    }
-    .hero-invitation {
-        right: 7vw;
-        bottom: 12svh;
     }
 }
