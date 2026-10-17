@@ -2,15 +2,23 @@
 // existing camera: only its pace changes between readable passages.
 const intervals=[
   [.88,1.25], // statement: hold
-  [1.07,1.15], // statement -> works
+  [.96,.85], // statement fades out
+  [1.02,1.10], // scene only
+  [1.07,.85], // works fades in
   [1.12,1.25], // works: hold
-  [1.32,1.15], // works -> Atmos
+  [1.20,.85], // works fades out
+  [1.24,1.20], // scene only
+  [1.32,.85], // Atmos fades in
   [1.37,1.50], // Atmos: hold
-  [1.60,1.20], // Atmos -> Flowgen
+  [1.45,.85], // Atmos fades out
+  [1.51,1.20], // scene only
+  [1.60,.85], // Flowgen fades in
   [1.78,1.50], // Flowgen: hold
   [2.08,1.30], // approach Fragments
   [2.18,.90], // Fragments: hold
-  [2.70,1.50], // return to the path -> web experiences
+  [2.44,1.30], // return to the path; Fragments fades out
+  [2.54,1.30], // scene only
+  [2.70,.90], // web experiences fades in
   [2.78,1.25], // web experiences: introduction
   [3.02,.90], // introduction -> scope
   [3.10,.90], // first scope pair
