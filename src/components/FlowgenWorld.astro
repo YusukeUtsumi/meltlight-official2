@@ -8,7 +8,7 @@ const fragments=['Archway','Misty water','Wet stone','Quiet coast','Mountain lay
     <h3 id="flowgen-title">{work.name}</h3>
     <p class="work-statement">{work.sentence}</p>
     <p class="work-description">{work.body}</p>
-    <div class="flowgen-links"><a href={work.href} class="project-link" target="_blank" rel="noopener noreferrer"><span>{work.link}</span><span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a><a class="fragments-try" href="#fragments">Try Fragments <span aria-hidden="true">↓</span></a></div>
+    <div class="flowgen-links"><a href={work.href} class="project-link" target="_blank" rel="noopener noreferrer"><span>{work.link}</span><span class="link-stroke" aria-hidden="true"></span><span class="sr-only"> (opens in a new tab)</span></a><a class="fragments-try" href="#fragments">Try Fragments <span aria-hidden="true">↓</span></a></div>
     <p class="work-footnote">{work.note}</p>
   </div>
 </article>
@@ -17,10 +17,10 @@ const fragments=['Archway','Misty water','Wet stone','Quiet coast','Mountain lay
     <p class="fragments-wordmark">Fragments</p>
     <canvas class="fragments-miniature" width="720" height="960" aria-hidden="true"></canvas>
     <div class="fragments-preview-thumbs" aria-hidden="true">{fragments.slice(0,4).map((name,i)=><span style={`--fragment-x:${i%2*100}%;--fragment-y:${Math.floor(i/2)*100/3}%`}></span>)}</div>
-    <a class="fragments-open" href="#fragments">Open Fragments ↗</a>
+    <a class="fragments-open" href="#fragments">Open Fragments <span class="link-stroke" aria-hidden="true"></span></a>
   </div>
   <div class="fragments-editor">
-    <header class="fragments-bar"><p><span class="fragments-wordmark">Fragments</span><span class="fragments-by">by MeltLight</span></p><div><button type="button" data-reset>Reset</button><button type="button" data-save>Save image ↗</button></div></header>
+    <header class="fragments-bar"><p><span class="fragments-wordmark">Fragments</span><span class="fragments-by">by MeltLight</span></p><div><button type="button" data-reset>Reset</button><button type="button" data-save>Save image <span class="link-stroke" aria-hidden="true"></span></button></div></header>
     <div class="fragments-workspace">
       <canvas class="fragments-artwork" width="720" height="960" role="img" aria-label="Between forms — Archway composition"></canvas>
       <form class="fragments-controls" onsubmit="return false">

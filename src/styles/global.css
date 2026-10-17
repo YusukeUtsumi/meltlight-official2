@@ -7,6 +7,9 @@
 html { background: var(--night); scroll-padding-top: 30px; }
 body { color: var(--bone); background: var(--night); font-family: var(--body); -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
+/* Draw the diagonal accent without font or emoji substitution. */
+.link-stroke { display: inline-grid; place-items: center; width: .8em; height: .8em; margin-inline-start: .3em; flex-shrink: 0; vertical-align: middle; }
+.link-stroke::before { content: ""; width: 100%; border-top: 1px solid currentColor; transform: rotate(-45deg); }
 button { font: inherit; color: inherit; cursor: pointer; }
 button, a { -webkit-tap-highlight-color: transparent; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--copper); outline-offset: 7px; }

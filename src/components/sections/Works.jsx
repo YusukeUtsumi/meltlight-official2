@@ -49,7 +49,7 @@ export default function Works() {
                             <h3 className="work-statement">{work.statement}</h3>
                             <p className="work-description">{work.body}</p>
                             <a className="amount" href={work.href} target="_blank" rel="noopener noreferrer">
-                                <span>ENTER</span>{work.name}<span aria-hidden="true">↗</span>
+                                <span>ENTER</span>{work.name}<span className="link-stroke" aria-hidden="true"></span>
                             </a>
                         </div>
                     </div>
