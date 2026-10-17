@@ -277,6 +277,22 @@ vec3 photograph(float id,vec3 p){
   }
   return spatialSurface(uv,thermalSurface(uv,texture2D(uLayers,uv).rgb));
 }
+vec3 courtyardWater(vec3 world){
+  vec2 uv=clamp(projected(uPhoto0,world),.002,.998);
+  vec3 original=texture2D(uCourtyard,uv).rgb;
+  // The photograph's causeway is wider than the physical walking route.
+  // Replace its left-bank footprint with open-water detail, never with a
+  // stretched bank sample that would turn a lamp reflection into a diagonal.
+  float centre=6.*smoothstep(0.,20.,world.z);
+  if(world.x<centre&&uv.y>.63){
+    float bank=.685-1.40*(uv.y-.63)-.025;
+    float footprint=smoothstep(bank-.018,bank+.004,uv.x)*smoothstep(.63,.66,uv.y);
+    vec2 tile=1.-abs(mod(world.xz*vec2(.12,.09),2.)-1.);
+    vec3 water=texture2D(uCourtyard,vec2(.32,.675)+tile*vec2(.18,.060)).rgb;
+    original=mix(original,water,footprint);
+  }
+  return original;
+}
 void main(){
   vec3 col;
   if(uMaterial<.5) {col=photograph(0.,vWorld);if(abs(vNormal.x)>.5)col=texture2D(uStone,vWorld.zy*.24).rgb*vec3(.25,.29,.38);}
@@ -301,7 +317,7 @@ void main(){
     float ripple=sin(currentZ*30.+sin(vWorld.x*9.)*.5);
     col*=.97+.03*ripple;
     col=waterTone(col,vWorld.z);
-    col=mix(photograph(0.,vWorld+vec3(crossWave*.018,0.,wave*.085)),col,smoothstep(3.,13.,uCamera.z));
+    col=mix(courtyardWater(vWorld+vec3(crossWave*.018,0.,wave*.085)),col,smoothstep(3.,13.,uCamera.z));
     // Travelling light makes the inward current visible even in dark water.
     float glint=pow(.5+.5*sin(phase),7.);
     col+=vec3(.026,.032,.043)*(glint-.23)*(.7+dot(col,vec3(.333)));
