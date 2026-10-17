@@ -8,7 +8,7 @@
 .courtyard-scene { position: absolute; inset: 0 0 auto; height: 100svh; overflow: hidden; }
 .courtyard-fallback, .courtyard-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .courtyard-fallback { object-fit: cover; object-position: center; }
-.fallback-first { transform: scale(var(--fallback-zoom, 1)); transform-origin: 71% 53%; }
+.fallback-first { object-position: center; transform: scale(var(--fallback-zoom, 1)); transform-origin: 71% 53%; }
 .fallback-gate { opacity: var(--gate-opacity, 0); }
 .fallback-layers { opacity: var(--layers-opacity, 0); }
 .courtyard-canvas { opacity: 0; pointer-events: none; }
@@ -70,6 +70,7 @@
   .site-header nav { font-size: 10px; gap: 16px; }
   .site-header .wordmark { font-size:26px; }
   .courtyard-fallback { object-position: 68% center; }
+  .courtyard-fallback.fallback-first { object-position: center; }
   .entrance-copy, .journey-enhanced .entrance-copy { padding-top: 23svh; padding-inline: 22px; }
   .hero-type h1 { font-size: clamp(48px, 14vw, 82px); line-height: .94; letter-spacing: -.04em; }
   .hero-line:nth-child(2) em, .mobile-last { display: block; }

@@ -62,7 +62,7 @@ export function mountCourtyard() {
   const mistScatter=document.querySelector('#copy-mist feDisplacementMap'), mistBlur=document.querySelector('#copy-mist feGaussianBlur');
   let previousMist=-1;
   let disposed=false, renderer=null, images=null, lost=false, frame=0, layoutDirty=true;
-  let width=0,height=0,top=0,travel=1,typeBounds=null,hovered=false;
+  let width=0,height=0,top=0,travel=1,typeBounds=null,hovered=false,hasPointer=false;
   let time=0,auroraTime=0,lastTime=0,lastPaint=0,px=0,py=0,sx=0,sy=0;
   let paused=reduced.matches;
   root.classList.add('journey-enhanced');
@@ -190,7 +190,9 @@ export function mountCourtyard() {
     }
     if(renderer&&!lost&&visible&&!reduced.matches&&state.contactDarkness<1&&(paused||now-lastPaint>=(width<600?33:25))) {
       if(artworkDirty){renderer.updateArtwork();artworkDirty=false;}
-      const projected=renderer.draw({progress,time,auroraTime,width,height,flowgen:state.flowgenReveal,experience:state.experienceReveal,temperature:{...temperature,known:temperature.known*state.atmosReveal},x:fine.matches&&!paused?(sx/width-.5)*2:0,y:fine.matches&&!paused?(sy/height-.5)*2:0});
+      const projected=renderer.draw({progress,time,auroraTime,width,height,flowgen:state.flowgenReveal,experience:state.experienceReveal,temperature:{...temperature,known:temperature.known*state.atmosReveal},x:hasPointer&&fine.matches&&!paused?(sx/width-.5)*2:0,y:hasPointer&&fine.matches&&!paused?(sy/height-.5)*2:0});
+      // Reveal a completed frame, never an empty canvas after texture upload.
+      root.classList.add('courtyard-live');
       const inscription=projected.inscription;
       placeFragments(projected.app);
       plaque.style.left=inscription.left.toFixed(2)+'px';plaque.style.top=inscription.top.toFixed(2)+'px';plaque.style.width=Math.max(1,inscription.width).toFixed(2)+'px';plaque.style.height=Math.max(1,inscription.height).toFixed(2)+'px';
@@ -211,8 +213,7 @@ export function mountCourtyard() {
       images=await Promise.all(['courtyard','gate','layers','stone'].map(async name=>{const im=new Image();im.src=`/images/walk/${name}${small&&name!=='stone'?'-small':''}.webp`;await im.decode();return im;}));
       if(disposed)return;
       renderer=createWalkRenderer(canvas,images,{artwork:fragments.canvas});
-      if(renderer)root.classList.add('courtyard-live');
-      else staticFallback();
+      if(!renderer)staticFallback();
       layoutDirty=true;schedule();
     } catch(error) { if(!disposed){console.warn('MeltLight scene images unavailable:',error);staticFallback();} }
   }
@@ -228,6 +229,7 @@ export function mountCourtyard() {
   const onResize=()=>{layoutDirty=true;schedule();};
   const onPointer=e=>{
     if(e.pointerType==='touch')return;
+    if(!hasPointer){sx=e.clientX;sy=e.clientY;hasPointer=true;}
     px=e.clientX;py=e.clientY;hovered=Boolean(e.target.closest('.hero-type'));schedule();
   };
   const onLeave=()=>{hovered=false;type.classList.remove('is-rippling');};
@@ -236,7 +238,7 @@ export function mountCourtyard() {
   const onVisibility=()=>{lastTime=0;if(document.hidden){cancelAnimationFrame(frame);frame=0;}else schedule();};
   const onInvitation=e=>{if(!reduced.matches&&root.classList.contains('journey-enhanced')){e.preventDefault();window.scrollTo({top:top+travel*.80,behavior:'smooth'});}};
   const onLost=e=>{e.preventDefault();lost=true;root.classList.remove('courtyard-live');};
-  const onRestored=()=>{renderer?.release();renderer=createWalkRenderer(canvas,images,{artwork:fragments.canvas});lost=false;if(renderer)root.classList.add('courtyard-live');else staticFallback();schedule();};
+  const onRestored=()=>{renderer?.release();renderer=createWalkRenderer(canvas,images,{artwork:fragments.canvas});lost=false;if(!renderer)staticFallback();schedule();};
   window.addEventListener('meltlight:artwork',onArtwork);document.addEventListener('click',onDemo);
   window.addEventListener('meltlight:weather',onWeather);
   window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onResize,{passive:true});
