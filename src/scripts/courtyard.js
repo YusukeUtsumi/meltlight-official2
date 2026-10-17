@@ -3,6 +3,7 @@ import {surfaceTransform} from './flowgen/projection.js';
 // Continuous physical travel through a shared stone causeway and portal.
 import {createWalkRenderer,GATE_EXIT_PROGRESS,walkCamera,projectFragments} from "./courtyard-walk.js";
 import {ambientTime} from './ambient-clock.js';
+import {journeyProgress,journeyPages,JOURNEY_ANCHORS} from './journey-pacing.js';
 // Scroll remains native; only water and a local typographic ripple use time.
 export const clamp = (n, a = 0, b = 1) => Math.min(b, Math.max(a, n));
 export const smooth = (a, b, n) => { const t = clamp((n - a) / (b - a)); return t * t * (3 - 2 * t); };
@@ -17,12 +18,14 @@ export function journeyState(progress) {
     blend: progress < .51 ? smooth(.41, .49, progress) : smooth(.54, statementStarts[0], progress),
     alignment: smooth(.11, .34, progress),
     first, second,
-    atmosReveal: smooth(1.16,1.25,progress)*(1-smooth(1.37,1.47,progress)),
-    flowgenReveal:smooth(1.43,1.55,progress)*(1-smooth(2.18,2.42,progress)),
-    appReveal:smooth(1.43,1.55,progress)*(1-smooth(2.23,2.44,progress)),
-    flowgenCopy:smooth(1.43,1.55,progress)*(1-smooth(1.78,1.94,progress)),
+    philosophyOpacity:1-smooth(.88,.96,progress),
+    worksReveal:smooth(1.02,1.07,progress)*(1-smooth(1.12,1.20,progress)),
+    atmosReveal: smooth(1.24,1.32,progress)*(1-smooth(1.37,1.45,progress)),
+    flowgenReveal:smooth(1.51,1.60,progress)*(1-smooth(2.18,2.42,progress)),
+    appReveal:smooth(1.51,1.60,progress)*(1-smooth(2.23,2.44,progress)),
+    flowgenCopy:smooth(1.51,1.60,progress)*(1-smooth(1.78,1.94,progress)),
     appFocus:smooth(1.76,2.08,progress),
-    experienceReveal:smooth(2.46,2.62,progress)*(1-smooth(3.34,3.52,progress)),
+    experienceReveal:smooth(2.54,2.70,progress)*(1-smooth(3.34,3.52,progress)),
     aboutReveal:smooth(3.55,3.79,progress)*(1-smooth(4.08,4.23,progress)),
     aboutIdentity:smooth(3.62,3.82,progress)*(1-smooth(4.08,4.23,progress)),
     contactDarkness:smooth(4.16,4.46,progress),
@@ -62,7 +65,8 @@ export function mountCourtyard() {
   const mistScatter=document.querySelector('#copy-mist feDisplacementMap'), mistBlur=document.querySelector('#copy-mist feGaussianBlur');
   let previousMist=-1;
   let disposed=false, renderer=null, images=null, lost=false, frame=0, layoutDirty=true;
-  let width=0,height=0,top=0,travel=1,typeBounds=null,hovered=false,hasPointer=false;
+  let width=0,height=0,top=0,typeBounds=null,hovered=false,hasPointer=false;
+  let previousProgress=0,scrollDirection=1;
   let time=0,auroraTime=0,lastTime=0,lastPaint=0,px=0,py=0,sx=0,sy=0;
   let paused=reduced.matches;
   root.classList.add('journey-enhanced');
@@ -83,14 +87,21 @@ export function mountCourtyard() {
   const schedule=()=>{if(!frame&&!disposed&&!document.hidden)frame=requestAnimationFrame(render);};
   function layout() {
     const rect=stage.getBoundingClientRect(); width=rect.width;height=rect.height;
-    const bounds=threshold.getBoundingClientRect();top=bounds.top+window.scrollY;travel=Math.max(1,height*(width<=600?5.1:5.6));
+    const bounds=threshold.getBoundingClientRect();top=bounds.top+window.scrollY;
+    const mobile=width<=600;
+    if(reduced.matches)threshold.style.removeProperty('height');
+    else threshold.style.height=((journeyPages(5.07,mobile)+1)*height).toFixed(2)+'px';
+    for(const [id,progress] of Object.entries(JOURNEY_ANCHORS)){
+      const anchor=document.querySelector(`[data-journey-anchor="${id}"]`);
+      anchor.style.top=(journeyPages(progress,mobile)*height).toFixed(2)+'px';
+    }
     const ratio=Math.min(devicePixelRatio||1,1.5,Math.sqrt((width<600?550000:1200000)/(Math.max(1,width*height))));
     canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);
     typeBounds=type.getBoundingClientRect();layoutDirty=false;
   }
   function updateCopy(state,progress,dt) {
-    threshold.style.setProperty('--travel',clamp(progress/(threshold.offsetHeight/height-1)*(width<=600?5.1:5.6)).toFixed(4));
-    const philoOpacity=1-smooth(.94,1.02,progress),worksOpacity=smooth(.98,1.07,progress)*(1-smooth(1.12,1.20,progress)),atmosOpacity=state.atmosReveal;
+    threshold.style.setProperty('--travel',clamp((window.scrollY-top)/Math.max(1,threshold.offsetHeight-height)).toFixed(4));
+    const philoOpacity=state.philosophyOpacity,worksOpacity=state.worksReveal,atmosOpacity=state.atmosReveal;
     threshold.style.setProperty('--philosophy-opacity',philoOpacity.toFixed(4));
     threshold.style.setProperty('--works-opacity',worksOpacity.toFixed(4));threshold.style.setProperty('--works-blur',((1-worksOpacity)*10).toFixed(2)+'px');
     threshold.style.setProperty('--atmos-opacity',atmosOpacity.toFixed(4));threshold.style.setProperty('--atmos-blur',((1-atmosOpacity)*10).toFixed(2)+'px');
@@ -152,7 +163,7 @@ export function mountCourtyard() {
       const target=state.lines[i],previous=lineReveals[i];
       // Let type quietly condense in place over ~4 seconds; reverse scrolling
       // clears it promptly rather than leaving text floating in the doorway.
-      const p=paused||reduced.matches?target:previous+(target-previous)*(1-Math.exp(-dt/(target>previous?1.25:.15)));
+      const p=paused||reduced.matches||scrollDirection<0?target:previous+(target-previous)*(1-Math.exp(-dt/(target>previous?1.25:.15)));
       lineReveals[i]=p;
       line.style.setProperty('--line-opacity',p.toFixed(4));
       line.style.setProperty('--line-blur',(Math.pow(1-p,1.8)*10).toFixed(2)+'px');
@@ -160,13 +171,15 @@ export function mountCourtyard() {
     });
     philosophy.classList.toggle('is-readable',progress>statementStarts[0]||reduced.matches);
     root.classList.toggle('past-courtyard',window.scrollY>top+threshold.offsetHeight-height*.3);
-    threshold.dataset.scene=progress<.31?'courtyard':progress<GATE_EXIT_PROGRESS?'gate':progress<1.16?'layers':progress<1.43?'atmos':progress<2.44?'flowgen':progress<3.55?'experiences':progress<4.16?'about':progress<4.51?'darkness':'contact';
+    threshold.dataset.scene=progress<.31?'courtyard':progress<GATE_EXIT_PROGRESS?'gate':progress<1.24?'layers':progress<1.51?'atmos':progress<2.44?'flowgen':progress<3.55?'experiences':progress<4.16?'about':progress<4.51?'darkness':'contact';
     threshold.dataset.progress=progress.toFixed(4);
   }
   function render(now) {
     frame=0;if(disposed||document.hidden)return;
     if(layoutDirty)layout();
-    const progress=reduced.matches?0:Math.max(0,(window.scrollY-top)/travel), state=journeyState(progress);
+    const progress=reduced.matches?0:journeyProgress(Math.max(0,(window.scrollY-top)/height),width<=600), state=journeyState(progress);
+    if(Math.abs(progress-previousProgress)>.0001)scrollDirection=progress<previousProgress?-1:1;
+    previousProgress=progress;
     const dt=lastTime?Math.min((now-lastTime)/1000,.07):0;lastTime=now;
     updateCopy(state,progress,dt);
     if(weatherTarget){
@@ -236,7 +249,7 @@ export function mountCourtyard() {
   const onMotion=()=>{paused=!paused;lastTime=0;setMotion();schedule();};
   const onPreference=()=>{paused=reduced.matches;hovered=false;lastTime=0;setMotion();layoutDirty=true;schedule();};
   const onVisibility=()=>{lastTime=0;if(document.hidden){cancelAnimationFrame(frame);frame=0;}else schedule();};
-  const onInvitation=e=>{if(!reduced.matches&&root.classList.contains('journey-enhanced')){e.preventDefault();window.scrollTo({top:top+travel*.80,behavior:'smooth'});}};
+  const onInvitation=e=>{if(!reduced.matches&&root.classList.contains('journey-enhanced')){e.preventDefault();window.scrollTo({top:top+journeyPages(.82,width<=600)*height,behavior:'smooth'});}};
   const onLost=e=>{e.preventDefault();lost=true;root.classList.remove('courtyard-live');};
   const onRestored=()=>{renderer?.release();renderer=createWalkRenderer(canvas,images,{artwork:fragments.canvas});lost=false;if(!renderer)staticFallback();schedule();};
   window.addEventListener('meltlight:artwork',onArtwork);document.addEventListener('click',onDemo);
@@ -253,6 +266,8 @@ export function mountCourtyard() {
   function dispose() {
     disposed=true;fragments.dispose();window.removeEventListener('meltlight:artwork',onArtwork);document.removeEventListener('click',onDemo);window.removeEventListener('load',onReady);cancelAnimationFrame(frame);observer.disconnect();renderer?.release();clone.remove();
     root.classList.remove('courtyard-live','journey-enhanced','past-courtyard','in-contact');
+    threshold.style.removeProperty('height');
+    document.querySelectorAll('[data-journey-anchor]').forEach(anchor=>anchor.style.removeProperty('top'));
     window.removeEventListener('meltlight:weather',onWeather);
     window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onResize);window.removeEventListener('pointermove',onPointer);root.removeEventListener('pointerleave',onLeave);
     reduced.removeEventListener('change',onPreference);motion.removeEventListener('click',onMotion);invitation.removeEventListener('click',onInvitation);document.removeEventListener('visibilitychange',onVisibility);
