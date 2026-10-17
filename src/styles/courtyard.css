@@ -29,9 +29,6 @@
 .hero-type h1 { font: 400 clamp(68px, 10.25vw, 205px)/.9 var(--display); letter-spacing: -.042em; color: var(--bone); -webkit-text-stroke: .2px var(--bone); }
 .hero-line { display: block; }
 .hero-type em { color: inherit; }
-.hero-ripple { position: absolute; inset: 0; pointer-events: none; filter: url(#copy-water); opacity: 0; clip-path: circle(0 at 0 0); }
-.hero-type.is-rippling > #hero-question { mask-image: radial-gradient(circle 135px at var(--ripple-x) var(--ripple-y), transparent 0 70%, #000 100%); }
-.hero-type.is-rippling > .hero-ripple { opacity: 1; clip-path: none; mask-image: radial-gradient(circle 135px at var(--ripple-x) var(--ripple-y), #000 0 70%, transparent 100%); }
 .courtyard-philosophy { position: relative; z-index: 2; padding: 17svh var(--gutter) 16svh; min-height: 100svh; background: linear-gradient(#080c1430, #080c1430), url('/images/walk/layers.webp') center / cover; }
 .translation-lines { font: 400 clamp(43px, 5.35vw, 107px)/1.08 var(--display); letter-spacing: -.025em; color: var(--bone); }
 .translation-lines p + p { margin-top: .12em; }
@@ -42,7 +39,7 @@
 .threshold-invitation > span:last-child { font-size: 16px; }
 .threshold-progress { top: auto; right: var(--gutter); bottom: 37px; width: 80px; height: 1px; background: #e8e1d52b; }
 .threshold-progress span { transform: scaleX(var(--travel, 0)); transform-origin: left; }
-.ripple-definitions { position: absolute; pointer-events: none; }
+.copy-filter-definitions { position: absolute; pointer-events: none; }
 .motion-toggle { background: #080c14c9; border-color: #e8e1d530; padding: 9px 12px; bottom: 14px; }
 
 /* Scroll distance is native. The sticky frame has one stable viewport height. */
@@ -94,6 +91,6 @@
   .journey-enhanced .entrance-copy { position: relative; height: 100svh; opacity: 1 !important; transform: none !important; }
   .journey-enhanced .courtyard-philosophy { position: relative; height: auto; min-height: 100svh; background: linear-gradient(#080c1430, #080c1430), url('/images/walk/layers.webp') center / cover; }
   .journey-enhanced .translation-lines p, .journey-enhanced .philosophy-conclusion { opacity: 1 !important; filter: none !important; text-shadow: none; }
-  .courtyard-canvas, .hero-ripple, .threshold-progress, .entrance-bottom { display: none; }
+  .courtyard-canvas, .threshold-progress, .entrance-bottom { display: none; }
   .courtyard-live .courtyard-fallback.fallback-first { opacity: 1; transform: none; }
 }

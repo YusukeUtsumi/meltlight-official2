@@ -4,7 +4,7 @@ import {surfaceTransform} from './flowgen/projection.js';
 import {createWalkRenderer,GATE_EXIT_PROGRESS,walkCamera,projectFragments} from "./courtyard-walk.js";
 import {ambientTime} from './ambient-clock.js';
 import {journeyProgress,journeyPages,JOURNEY_ANCHORS} from './journey-pacing.js';
-// Scroll remains native; only water and a local typographic ripple use time.
+// Scroll remains native; ambient water continues independently.
 export const clamp = (n, a = 0, b = 1) => Math.min(b, Math.max(a, n));
 export const smooth = (a, b, n) => { const t = clamp((n - a) / (b - a)); return t * t * (3 - 2 * t); };
 // Halve the scroll distance from the physical exit to each statement's reveal.
@@ -45,7 +45,7 @@ export function mountCourtyard() {
   const root=document.documentElement, threshold=document.querySelector('.threshold'), stage=document.querySelector('.threshold-stage');
   if (!threshold || !stage) return;
   const canvas=document.querySelector('.courtyard-canvas'), fallback=document.querySelector('.courtyard-fallback');
-  const type=document.querySelector('.hero-type'), headline=document.querySelector('#hero-question'), philosophy=document.querySelector('.courtyard-philosophy');
+  const type=document.querySelector('.hero-type'), philosophy=document.querySelector('.courtyard-philosophy');
   const lines=[...document.querySelectorAll('.translation-lines p'),document.querySelector('.philosophy-conclusion')];
   const lineReveals=lines.map(()=>0);
   const works=document.querySelector('.courtyard-works'),atmos=document.querySelector('.courtyard-atmos'),plaque=document.querySelector('.atmos-plaque');
@@ -59,13 +59,11 @@ export function mountCourtyard() {
   const temperature={top:[0,0,0],bottom:[0,0,0],known:0,windSpeed:0};let weatherTarget=null;
   const invitation=document.querySelector('.threshold-invitation'), motion=document.querySelector('.motion-toggle');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)'), fine=matchMedia('(hover: hover) and (pointer: fine)');
-  const clone=headline.cloneNode(true); clone.removeAttribute('id'); clone.setAttribute('aria-hidden','true'); clone.classList.add('hero-ripple'); type.append(clone);
-  const noiseOffset=document.querySelector('#copy-water feOffset');
   const mistOffset=document.querySelector('#copy-mist feOffset'), mistMask=document.querySelector('#copy-mist feColorMatrix');
   const mistScatter=document.querySelector('#copy-mist feDisplacementMap'), mistBlur=document.querySelector('#copy-mist feGaussianBlur');
   let previousMist=-1;
   let disposed=false, renderer=null, images=null, lost=false, frame=0, layoutDirty=true;
-  let width=0,height=0,top=0,typeBounds=null,hovered=false,hasPointer=false;
+  let width=0,height=0,top=0,hasPointer=false;
   let previousProgress=0,scrollDirection=1;
   let time=0,auroraTime=0,lastTime=0,lastPaint=0,px=0,py=0,sx=0,sy=0;
   let paused=reduced.matches;
@@ -97,7 +95,7 @@ export function mountCourtyard() {
     }
     const ratio=Math.min(devicePixelRatio||1,1.5,Math.sqrt((width<600?550000:1200000)/(Math.max(1,width*height))));
     canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);
-    typeBounds=type.getBoundingClientRect();layoutDirty=false;
+    layoutDirty=false;
   }
   function updateCopy(state,progress,dt) {
     threshold.style.setProperty('--travel',clamp((window.scrollY-top)/Math.max(1,threshold.offsetHeight-height)).toFixed(4));
@@ -194,13 +192,6 @@ export function mountCourtyard() {
     // so a new observation cannot snap the luminous folds to another position.
     if(!paused&&visible&&!reduced.matches)auroraTime+=dt*(.20+Math.min(temperature.windSpeed,15)*.025);
     sx+=(px-sx)*(1-Math.exp(-dt*7));sy+=(py-sy)*(1-Math.exp(-dt*7));
-    const ripple=hovered&&!paused&&!reduced.matches&&fine.matches&&state.heroOpacity>.8;
-    type.classList.toggle('is-rippling',ripple);
-    if(ripple) {
-      typeBounds=type.getBoundingClientRect();
-      type.style.setProperty('--ripple-x',(sx-typeBounds.left).toFixed(1)+'px');type.style.setProperty('--ripple-y',(sy-typeBounds.top).toFixed(1)+'px');
-      noiseOffset.setAttribute('dx',(Math.sin(time*.33)*15).toFixed(2));noiseOffset.setAttribute('dy',(time*.7%50).toFixed(2));
-    }
     if(renderer&&!lost&&visible&&!reduced.matches&&state.contactDarkness<1&&(paused||now-lastPaint>=(width<600?33:25))) {
       if(artworkDirty){renderer.updateArtwork();artworkDirty=false;}
       const projected=renderer.draw({progress,time,auroraTime,width,height,flowgen:state.flowgenReveal,experience:state.experienceReveal,temperature:{...temperature,known:temperature.known*state.atmosReveal},x:hasPointer&&fine.matches&&!paused?(sx/width-.5)*2:0,y:hasPointer&&fine.matches&&!paused?(sy/height-.5)*2:0});
@@ -243,11 +234,10 @@ export function mountCourtyard() {
   const onPointer=e=>{
     if(e.pointerType==='touch')return;
     if(!hasPointer){sx=e.clientX;sy=e.clientY;hasPointer=true;}
-    px=e.clientX;py=e.clientY;hovered=Boolean(e.target.closest('.hero-type'));schedule();
+    px=e.clientX;py=e.clientY;schedule();
   };
-  const onLeave=()=>{hovered=false;type.classList.remove('is-rippling');};
   const onMotion=()=>{paused=!paused;lastTime=0;setMotion();schedule();};
-  const onPreference=()=>{paused=reduced.matches;hovered=false;lastTime=0;setMotion();layoutDirty=true;schedule();};
+  const onPreference=()=>{paused=reduced.matches;lastTime=0;setMotion();layoutDirty=true;schedule();};
   const onVisibility=()=>{lastTime=0;if(document.hidden){cancelAnimationFrame(frame);frame=0;}else schedule();};
   const onInvitation=e=>{if(!reduced.matches&&root.classList.contains('journey-enhanced')){e.preventDefault();window.scrollTo({top:top+journeyPages(.82,width<=600)*height,behavior:'smooth'});}};
   const onLost=e=>{e.preventDefault();lost=true;root.classList.remove('courtyard-live');};
@@ -255,7 +245,7 @@ export function mountCourtyard() {
   window.addEventListener('meltlight:artwork',onArtwork);document.addEventListener('click',onDemo);
   window.addEventListener('meltlight:weather',onWeather);
   window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onResize,{passive:true});
-  window.addEventListener('pointermove',onPointer,{passive:true});root.addEventListener('pointerleave',onLeave);
+  window.addEventListener('pointermove',onPointer,{passive:true});
   reduced.addEventListener('change',onPreference);motion.addEventListener('click',onMotion);invitation.addEventListener('click',onInvitation);
   document.addEventListener('visibilitychange',onVisibility);canvas.addEventListener('webglcontextlost',onLost);canvas.addEventListener('webglcontextrestored',onRestored);
   const observer=new ResizeObserver(onResize);observer.observe(stage);document.fonts.ready.then(()=>{if(!disposed){onResize();}});
@@ -264,12 +254,12 @@ export function mountCourtyard() {
   }));});};
   if(document.readyState==='complete')onReady();else window.addEventListener('load',onReady,{once:true});
   function dispose() {
-    disposed=true;fragments.dispose();window.removeEventListener('meltlight:artwork',onArtwork);document.removeEventListener('click',onDemo);window.removeEventListener('load',onReady);cancelAnimationFrame(frame);observer.disconnect();renderer?.release();clone.remove();
+    disposed=true;fragments.dispose();window.removeEventListener('meltlight:artwork',onArtwork);document.removeEventListener('click',onDemo);window.removeEventListener('load',onReady);cancelAnimationFrame(frame);observer.disconnect();renderer?.release();
     root.classList.remove('courtyard-live','journey-enhanced','past-courtyard','in-contact');
     threshold.style.removeProperty('height');
     document.querySelectorAll('[data-journey-anchor]').forEach(anchor=>anchor.style.removeProperty('top'));
     window.removeEventListener('meltlight:weather',onWeather);
-    window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onResize);window.removeEventListener('pointermove',onPointer);root.removeEventListener('pointerleave',onLeave);
+    window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onResize);window.removeEventListener('pointermove',onPointer);
     reduced.removeEventListener('change',onPreference);motion.removeEventListener('click',onMotion);invitation.removeEventListener('click',onInvitation);document.removeEventListener('visibilitychange',onVisibility);
     canvas.removeEventListener('webglcontextlost',onLost);canvas.removeEventListener('webglcontextrestored',onRestored);document.removeEventListener('astro:before-swap',dispose);
   }
