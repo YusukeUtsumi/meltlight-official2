@@ -1,4 +1,5 @@
 import {createCodeTexture,codeTravel} from './flowgen/code-texture.js';
+import {surfaceMatrix,surfacePoint,inverseSurfaceMatrix} from './flowgen/projection.js';
 // A shared, metre-based corridor. Photographic projections retain the approved
 // materials; the route, portal thickness and nearby piers have real geometry.
 const mix=(a,b,t)=>a+(b-a)*t;
@@ -50,10 +51,14 @@ export function projectInscription(camera,width,height){
   const a=point(.750,.245),b=point(.867,.402);
   return {left:a[0],top:a[1],width:b[0]-a[0],height:b[1]-a[1]};
 }
+// Use coordinates within the gate's actual sloping face, not an axis-aligned
+// rectangle in the source image. Its horizontal lines share the gate's vanishing point.
+const fragmentsGate=surfaceMatrix([[.700,.228],[.879,.070],[.889,.652],[.701,.656]]);
+export const FRAGMENTS_SURFACE=[[.07,.10],[.94,.10],[.94,.49],[.07,.49]].map(([x,y])=>surfacePoint(fragmentsGate,x,y));
+const fragmentsInverse=new Float32Array(inverseSurfaceMatrix(FRAGMENTS_SURFACE));
 export function projectFragments(camera,width,height){
   const point=photoProjector(camera,width,height);
-  const bottom=width<=600?.435:.408;
-  return [[.714,.245],[.873,.245],[.873,bottom],[.714,bottom]].map(([u,v])=>point(u,v));
+  return FRAGMENTS_SURFACE.map(([u,v])=>point(u,v));
 }
 const anchors=[walkCamera(0),walkCamera(.42),walkCamera(.79)];
 const vertex=`
@@ -66,6 +71,7 @@ const fragment=`
 precision highp float;
 uniform sampler2D uCourtyard,uGate,uLayers,uStone,uCode,uArtwork;
 uniform mat4 uPhoto0,uPhoto1,uPhoto2;
+uniform mat3 uPanelInverse;
 uniform float uMaterial,uTime,uStudy;
 uniform vec3 uCamera,uTempTop,uTempBottom;
 uniform float uTempKnown,uAuroraTime,uWindSpeed,uFlowgen,uCodePhase,uExperience;
@@ -182,7 +188,8 @@ vec3 spatialSurface(vec2 uv,vec3 original){
   return mix(original,coating,mask*uExperience*.72);
 }
 vec3 reflectedArtwork(vec2 uv,vec3 original){
-  vec2 panel=(uv-vec2(.714,.245))/vec2(.159,.163);
+  vec3 panelPoint=uPanelInverse*vec3(uv,1.);
+  vec2 panel=panelPoint.xy/panelPoint.z;
   if(uFlowgen<.001||panel.x<.04||panel.x>.53||panel.y<.14||panel.y>.84)return original;
   vec2 art=vec2((panel.x-.04)/.49,(panel.y-.14)/.70);
   vec3 image=texture2D(uArtwork,art).rgb;
@@ -401,9 +408,10 @@ export function createWalkRenderer(canvas,images,{study=false,artwork=null}={}){
     gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(program));gl.useProgram(program);
     const blank=document.createElement('canvas');blank.width=2;blank.height=2;
     [...images,createCodeTexture(),artwork||blank].forEach((image,i)=>{const texture=gl.createTexture();textures.push(texture);gl.activeTexture(gl.TEXTURE0+i);gl.bindTexture(gl.TEXTURE_2D,texture);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);const wrap=(i===3||i===4)&&!(image.width&(image.width-1))&&!(image.height&(image.height-1))?gl.REPEAT:gl.CLAMP_TO_EDGE;gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,wrap);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,wrap);if(wrap===gl.REPEAT){gl.generateMipmap(gl.TEXTURE_2D);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);}});
-    const locations=Object.fromEntries(['View','Photo0','Photo1','Photo2','Courtyard','Gate','Layers','Stone','Material','Time','Camera','Study','TempTop','TempBottom','TempKnown','AuroraTime','WindSpeed','Code','Artwork','Flowgen','CodePhase','Experience','Cursor'].map(name=>[name,gl.getUniformLocation(program,'u'+name)]));
+    const locations=Object.fromEntries(['View','Photo0','Photo1','Photo2','PanelInverse','Courtyard','Gate','Layers','Stone','Material','Time','Camera','Study','TempTop','TempBottom','TempKnown','AuroraTime','WindSpeed','Code','Artwork','Flowgen','CodePhase','Experience','Cursor'].map(name=>[name,gl.getUniformLocation(program,'u'+name)]));
     ['Courtyard','Gate','Layers','Stone','Code','Artwork'].forEach((name,i)=>gl.uniform1i(locations[name],i));
     anchors.forEach((camera,i)=>gl.uniformMatrix4fv(locations['Photo'+i],false,matrix(camera,IMAGE_ASPECT)));
+    gl.uniformMatrix3fv(locations.PanelInverse,false,fragmentsInverse);
     gl.uniform1f(locations.Study,study?1:0);
     const position=gl.getAttribLocation(program,'aPosition'),normal=gl.getAttribLocation(program,'aNormal');
     const meshes=geometry().map(data=>{const buffer=gl.createBuffer();buffers.push(buffer);gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);return {buffer,count:data.length/6};});
