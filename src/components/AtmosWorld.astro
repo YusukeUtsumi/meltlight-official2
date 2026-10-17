@@ -1,0 +1,25 @@
+---
+const {work}=Astro.props;
+---
+<header id="works" class="works-intro courtyard-works" aria-labelledby="works-heading">
+  <p class="eyebrow">Two translations</p>
+  <h2 id="works-heading">What changes<br />when <em>form changes?</em></h2>
+  <p>Two works. Each begins with something that cannot yet be felt, trusted or read.</p>
+</header>
+<article id="atmos" class="work work-atmos courtyard-atmos" aria-labelledby="atmos-title">
+  <div class="atmos-copy">
+    <p class="eyebrow">{work.kind}</p>
+    <h3 id="atmos-title">{work.name}</h3>
+    <p class="work-statement">{work.sentence}</p>
+    <p class="work-description">{work.body}</p>
+    <a href={work.href} class="project-link" target="_blank" rel="noopener noreferrer"><span>{work.link}</span><span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+    <a class="atmos-source" href="https://www.jma.go.jp/bosai/amedas/" target="_blank" rel="noopener noreferrer">Temperature observation · JMA<span class="sr-only"> (opens in a new tab)</span></a>
+  </div>
+  <p class="work-footnote">{work.note}</p>
+</article>
+<div class="atmos-plaque" aria-live="polite" aria-atomic="true">
+  <p class="atmos-place">Kushiro, Hokkaido, Japan</p>
+  <p class="atmos-reading"><span data-temperature>—</span><span class="atmos-unit">°C</span></p>
+  <p class="atmos-wind" hidden>Wind <span data-wind>—</span> m/s</p>
+  <p class="atmos-observation" data-observation>Receiving observation</p>
+</div>

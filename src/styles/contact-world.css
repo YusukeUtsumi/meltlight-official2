@@ -1,0 +1,52 @@
+/* A few more steps along the causeway, then only darkness and an invitation. */
+.journey-enhanced .threshold { height:2940svh; }
+.journey-enhanced .journey-anchor-contact { top:2721.6svh; }
+.contact-darkness { display:none; }
+.courtyard-contact { position:relative; min-height:100svh; border:0; padding:17svh var(--gutter) 12svh; color:var(--bone); background:#030507; }
+.courtyard-contact .contact-content { max-width:1120px; }
+.courtyard-contact .eyebrow { color:#c2b9b0; font-size:11px; letter-spacing:.13em; }
+.courtyard-contact .contact-link { margin-top:30px; gap:36px; }
+.courtyard-contact h2 { font:400 clamp(72px,min(10.4vw,19svh),170px)/.94 var(--display); letter-spacing:-.035em; }
+.courtyard-contact h2 em { color:var(--bone); }
+.courtyard-contact .contact-arrow { font-size:80px; color:var(--copper); }
+.courtyard-contact .contact-bottom { margin-top:48px; gap:32px; align-items:end; justify-content:flex-end; }
+.courtyard-contact .text-link { display:inline-flex; align-items:center; justify-content:space-between; gap:44px; min-height:48px; font-size:clamp(18px,1.7vw,25px); padding:12px 0; }
+.courtyard-contact .text-link span { color:var(--copper); }
+.journey-enhanced .contact-darkness { display:block; position:absolute; inset:0; z-index:4; background:#030507; opacity:var(--contact-darkness,0); pointer-events:none; }
+.journey-enhanced .courtyard-contact { position:absolute; inset:0; min-height:0; height:100%; z-index:5; background:transparent; opacity:var(--contact-opacity,0); pointer-events:none; }
+.journey-enhanced .courtyard-contact.is-readable { pointer-events:auto; }
+.journey-enhanced .courtyard-contact .contact-bottom { opacity:var(--contact-details,0); }
+.journey-enhanced .courtyard-contact.is-emerging .contact-content { animation:contact-condense 2.487s cubic-bezier(.2,.5,.3,1) both; }
+@keyframes contact-condense {
+  0% { opacity:0; filter:blur(16px); text-shadow:0 0 28px #e8e1d538; }
+  45% { opacity:.32; filter:blur(5px); text-shadow:0 0 16px #e8e1d524; }
+  100% { opacity:1; filter:blur(0); text-shadow:0 0 0 transparent; }
+}
+[data-motion="paused"] .courtyard-contact.is-emerging .contact-content { animation:none; opacity:1; filter:none; }
+.in-contact .site-header { background:#030507; }
+.site-footer { background:#030507; color:var(--bone); }
+.footer-bottom { border-top-color:#e8e1d526; }
+.site-footer .footer-bottom { margin-top:0; }
+@media (max-width:600px) {
+  .journey-enhanced .threshold { height:2680svh; }
+  .journey-enhanced .journey-anchor-contact { top:2478.6svh; }
+  .courtyard-contact { padding:20svh 22px 12svh; }
+  .courtyard-contact .contact-link { margin-top:30px; align-items:start; gap:12px; }
+  .courtyard-contact h2 { font-size:clamp(56px,16vw,80px); line-height:.96; }
+  .courtyard-contact h2 em { display:block; }
+  .courtyard-contact .contact-arrow { font-size:32px; margin-top:12px; }
+  .courtyard-contact .contact-bottom { flex-direction:column; align-items:start; margin-top:36px; gap:24px; }
+  .courtyard-contact .text-link { font-size:18px; gap:42px; }
+}
+@media (max-height:740px) and (max-width:600px) {
+  .courtyard-contact { padding-top:17svh; }
+  .courtyard-contact .contact-link { margin-top:24px; }
+  .courtyard-contact .contact-bottom { margin-top:28px; gap:20px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  html.journey-enhanced .threshold { height:auto; }
+  .journey-enhanced .contact-darkness { display:none; }
+  .journey-enhanced .courtyard-contact { position:relative; min-height:100svh; height:auto; background:#030507; opacity:1; pointer-events:auto; }
+  .journey-enhanced .courtyard-contact .contact-bottom { opacity:1; }
+  .journey-enhanced .courtyard-contact.is-emerging .contact-content { animation:none; opacity:1; filter:none; }
+}

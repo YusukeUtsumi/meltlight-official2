@@ -1,0 +1,66 @@
+/* The existing courtyard continues. Only its view and mirror material change. */
+.journey-enhanced .threshold { height:1900svh; }
+.journey-enhanced .journey-anchor-commissions { top:1512svh; }
+.courtyard-experiences { position:relative; padding:16svh var(--gutter) 10svh; min-height:100svh; color:var(--bone); }
+.courtyard-experiences .commission-intro { grid-template-columns:62% 34%; gap:4%; margin-top:32px; align-items:start; }
+.courtyard-experiences .commission-intro h2 { font:400 clamp(82px,9.5vw,164px)/.93 var(--display); letter-spacing:-.045em; }
+.courtyard-experiences .commission-intro h2 em { color:var(--bone); }
+.courtyard-experiences .commission-body { padding-top:13px; text-shadow:0 1px 8px #080c14; }
+.courtyard-experiences .commission-statement { font:400 clamp(20px,1.65vw,26px)/1.45 var(--body); max-width:420px; }
+.courtyard-experiences .commission-description { font-size:clamp(18px,1.35vw,20px); line-height:1.7; max-width:420px; margin-top:24px; color:#e2dbd0; }
+.courtyard-experiences .commission-link { font-size:16px; margin-top:40px; }
+.courtyard-experiences .commission-scope { gap:32px; }
+.courtyard-experiences .commission-scope span { font-size:32px; }
+.courtyard-experiences .commission-scope p { font-size:16px; line-height:1.65; color:#e2dbd0; max-width:260px; text-shadow:0 1px 8px #080c14; }
+.journey-enhanced .courtyard-experiences { position:absolute; inset:0; height:100%; min-height:0; z-index:3; opacity:var(--experience-opacity,0); filter:blur(var(--experience-blur,10px)); pointer-events:none; }
+.journey-enhanced .courtyard-experiences.is-readable { pointer-events:auto; }
+.journey-enhanced .courtyard-experiences .commission-body { opacity:var(--experience-body,1); filter:blur(var(--experience-body-blur,0px)); }
+.journey-enhanced .courtyard-experiences .commission-scope { position:absolute; top:56%; left:var(--gutter); right:var(--gutter); margin:0; opacity:var(--experience-details,0); filter:blur(var(--experience-details-blur,8px)); }
+.journey-enhanced .courtyard-experiences .commission-link { position:absolute; right:var(--gutter); bottom:10svh; margin:0; }
+@media (max-width:900px) and (min-width:601px) {
+  .courtyard-experiences .commission-intro { grid-template-columns:56% 40%; }
+  .courtyard-experiences .commission-intro h2 { font-size:clamp(72px,9.4vw,100px); }
+  .courtyard-experiences .commission-description { font-size:17px; }
+  .courtyard-experiences .commission-scope { gap:20px; }
+  .courtyard-experiences .commission-scope span { font-size:27px; }
+}
+@media (max-width:600px) {
+  .journey-enhanced .threshold { height:1850svh; }
+  .journey-enhanced .journey-anchor-commissions { top:1377svh; }
+  .courtyard-experiences { padding:26svh 22px 9svh; }
+  .courtyard-experiences .commission-intro { display:block; margin-top:22px; }
+  .courtyard-experiences .commission-intro h2 { font-size:clamp(57px,16.6vw,90px); }
+  .courtyard-experiences .commission-body { padding-top:0; margin-top:30px; }
+  .courtyard-experiences .commission-statement { font-size:19px; line-height:1.45; margin:0; }
+  .courtyard-experiences .commission-description { font-size:16px; line-height:1.65; margin-top:18px; }
+  .courtyard-experiences .commission-scope { grid-template-columns:1fr 1fr; gap:24px 20px; }
+  .courtyard-experiences .commission-scope span { font-size:27px; }
+  .courtyard-experiences .commission-scope p { font-size:16px; line-height:1.55; margin-top:10px; }
+  .journey-enhanced .courtyard-experiences .commission-scope { top:50%; left:22px; right:22px; }
+  .journey-enhanced .courtyard-experiences .commission-scope li { grid-row:1; }
+  .journey-enhanced .courtyard-experiences .commission-scope li:nth-child(odd) { grid-column:1; }
+  .journey-enhanced .courtyard-experiences .commission-scope li:nth-child(even) { grid-column:2; }
+  .journey-enhanced .courtyard-experiences .commission-scope li:nth-child(-n+2) { opacity:var(--scope-first,1); }
+  .journey-enhanced .courtyard-experiences .commission-scope li:nth-child(n+3) { opacity:var(--scope-second,0); }
+  .journey-enhanced .courtyard-experiences .commission-link { left:22px; right:auto; bottom:9svh; }
+}
+@media (max-height:700px) and (min-width:601px) {
+  .courtyard-experiences { padding-top:14svh; }
+  .courtyard-experiences .commission-intro { margin-top:20px; }
+  .courtyard-experiences .commission-intro h2 { font-size:min(9.5vw,20svh); }
+  .courtyard-experiences .commission-description { font-size:18px; line-height:1.5; margin-top:16px; }
+}
+@media (max-height:740px) and (max-width:600px) {
+  .courtyard-experiences { padding-top:19svh; }
+  .courtyard-experiences .commission-body { margin-top:22px; }
+  .courtyard-experiences .commission-intro h2 { font-size:15vw; }
+  .journey-enhanced .courtyard-experiences .commission-scope { top:45%; }
+}
+@media (prefers-reduced-motion:reduce) {
+  html.journey-enhanced .threshold { height:auto; }
+  .journey-enhanced .courtyard-experiences { position:relative; height:auto; opacity:1; filter:none; pointer-events:auto; padding-block:80px; }
+  .journey-enhanced .courtyard-experiences .commission-body { opacity:1; filter:none; }
+  .journey-enhanced .courtyard-experiences .commission-scope { position:static; margin-top:60px; opacity:1; filter:none; }
+  .journey-enhanced .courtyard-experiences .commission-scope li:nth-child(n) { grid-row:auto; grid-column:auto; opacity:1; }
+  .journey-enhanced .courtyard-experiences .commission-link { position:static; margin-top:40px; }
+}

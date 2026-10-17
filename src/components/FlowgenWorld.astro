@@ -1,0 +1,36 @@
+---
+const {work}=Astro.props;
+const fragments=['Archway','Misty water','Wet stone','Quiet coast','Mountain layers','Pale water','Mineral','Distant gate'];
+---
+<article id="flowgen" class="work courtyard-flowgen" aria-labelledby="flowgen-title">
+  <div class="flowgen-copy">
+    <p class="eyebrow">{work.kind}</p>
+    <h3 id="flowgen-title">{work.name}</h3>
+    <p class="work-statement">{work.sentence}</p>
+    <p class="work-description">{work.body}</p>
+    <div class="flowgen-links"><a href={work.href} class="project-link" target="_blank" rel="noopener noreferrer"><span>{work.link}</span><span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a><a class="fragments-try" href="#fragments">Try Fragments <span aria-hidden="true">↓</span></a></div>
+    <p class="work-footnote">{work.note}</p>
+  </div>
+</article>
+<section id="fragments" class="fragments-surface" aria-label="Fragments composition editor" data-fragments>
+  <div class="fragments-preview">
+    <p class="fragments-wordmark">Fragments</p>
+    <canvas class="fragments-miniature" width="720" height="960" aria-hidden="true"></canvas>
+    <div class="fragments-preview-thumbs" aria-hidden="true">{fragments.slice(0,4).map((name,i)=><span style={`--fragment-x:${i%2*100}%;--fragment-y:${Math.floor(i/2)*100/3}%`}></span>)}</div>
+    <a class="fragments-open" href="#fragments">Open Fragments ↗</a>
+  </div>
+  <div class="fragments-editor">
+    <header class="fragments-bar"><p><span class="fragments-wordmark">Fragments</span><span class="fragments-by">by MeltLight</span></p><div><button type="button" data-reset>Reset</button><button type="button" data-save>Save image ↗</button></div></header>
+    <div class="fragments-workspace">
+      <canvas class="fragments-artwork" width="720" height="960" role="img" aria-label="Between forms — Archway composition"></canvas>
+      <form class="fragments-controls" onsubmit="return false">
+        <label class="fragments-words">Words<input name="words" value="Between forms" maxlength="48" autocomplete="off" spellcheck="false" /></label>
+        <fieldset class="fragments-layout"><legend>Layout</legend>{['Open','Layered','Quiet'].map((name,i)=><label><input type="radio" name="layout" value={name.toLowerCase()} checked={i===0} /><span>{name}</span></label>)}</fieldset>
+        <label>Space<input type="range" name="space" min="15" max="85" value="60" /></label>
+        <label>Light<input type="range" name="light" min="25" max="100" value="75" /></label>
+      </form>
+    </div>
+    <div class="fragments-filmstrip" role="group" aria-label="Choose a fragment">{fragments.map((name,i)=><button type="button" data-fragment={i} aria-label={name} aria-pressed={i===0?'true':'false'} style={`--fragment-x:${i%2*100}%;--fragment-y:${Math.floor(i/2)*100/3}%`}><span class="sr-only">{name}</span></button>)}</div>
+    <p class="sr-only" data-fragments-status role="status"></p>
+  </div>
+</section>

@@ -1,17 +1,77 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Hero from "../components/sections/Hero.jsx";
-import Philosophy from "../components/sections/Philosophy.jsx";
-import Works from "../components/sections/Works.jsx";
-import Aboutme from "../components/sections/About.jsx"
-import Contact from "../components/sections/Contact.jsx"
-
+import FlowgenWorld from "../components/FlowgenWorld.astro";
+import WebExperienceWorld from "../components/WebExperienceWorld.astro";
+import AboutWorld from "../components/AboutWorld.astro";
+import ContactWorld from "../components/ContactWorld.astro";
+import AtmosWorld from "../components/AtmosWorld.astro";
+const works = [
+  { id: "atmos", name: "Atmos", kind: "Data → sensation", sentence: "The air becomes a place.", body: "Temperature, humidity, wind, cloud and light are translated into color and moving form. Not a forecast to consult. A condition to enter.", href: "https://atmos.meltlight.art/", mode: 1, note: "A number can become weather.", category: "", link: "Enter Atmos" },
+  { id: "flowgen", name: "Flowgen", kind: "Idea → evidence", sentence: "A thought takes shape. Then it is tested.", body: "One sentence becomes architecture, code, attack, test and repair. The work moves forward only when the evidence does.", href: "https://flowgen.meltlight.art/", mode: 2, note: "A sentence can become a system.", category: "", link: "Enter Flowgen" },
+];
 ---
-
-<Layout title="MeltLight Official">
-    <Hero />
-    <Philosophy />
-    <Works />
-    <Aboutme />
-    <Contact />
+<Layout title="MeltLight">
+  <section id="threshold" class="threshold" data-atmos-world data-weather="loading" aria-labelledby="hero-question">
+    <span data-journey-anchor="works" class="journey-anchor journey-anchor-works" aria-hidden="true"></span>
+    <span data-journey-anchor="atmos" class="journey-anchor journey-anchor-atmos" aria-hidden="true"></span>
+    <span data-journey-anchor="flowgen" class="journey-anchor journey-anchor-flowgen" aria-hidden="true"></span>
+    <span data-journey-anchor="fragments" class="journey-anchor journey-anchor-fragments" aria-hidden="true"></span>
+    <span data-journey-anchor="commissions" class="journey-anchor journey-anchor-commissions" aria-hidden="true"></span>
+    <span data-journey-anchor="about" class="journey-anchor journey-anchor-about" aria-hidden="true"></span>
+    <span data-journey-anchor="contact" class="journey-anchor journey-anchor-contact" aria-hidden="true"></span>
+    <div class="threshold-stage">
+      <div class="courtyard-scene" aria-hidden="true">
+        <picture>
+          <source media="(max-width: 600px)" srcset="/images/walk/courtyard-small.webp" />
+          <img class="courtyard-fallback fallback-first" src="/images/walk/courtyard.webp" width="1671" height="941" alt="" fetchpriority="high" />
+        </picture>
+        <picture><source media="(max-width: 600px)" srcset="/images/walk/gate-small.webp" /><img class="courtyard-fallback fallback-gate" src="/images/walk/gate.webp" width="1672" height="941" alt="" /></picture>
+        <picture><source media="(max-width: 600px)" srcset="/images/walk/layers-small.webp" /><img class="courtyard-fallback fallback-layers" src="/images/walk/layers.webp" width="1672" height="941" alt="" /></picture>
+        <canvas class="courtyard-canvas"></canvas>
+      </div>
+      <div class="threshold-vignette" aria-hidden="true"></div>
+      <div class="entrance-copy">
+        <div class="hero-reveal">
+          <div class="hero-type">
+            <h1 id="hero-question"><span class="hero-line">What happens</span> <span class="hero-line">between <em>what exists</em></span> <span class="hero-line">and what <span class="mobile-last">we perceive?</span></span></h1>
+          </div>
+        </div>
+      </div>
+      <section id="philosophy" class="courtyard-philosophy" aria-label="Artist's statement">
+        <div class="translation-lines">
+          <p>A number can become <em>weather.</em></p>
+          <p>A sentence can become <em>a system.</em></p>
+          <p>A fact can learn another way <span class="reading-line"><em>to be read.</em></span></p>
+        </div>
+        <p class="philosophy-conclusion">The work begins in the <em>distance</em><br class="desktop-break" /> between one form and the next.</p>
+      </section>
+      <AtmosWorld work={works[0]} />
+      <FlowgenWorld work={works[1]} />
+      <WebExperienceWorld />
+      <AboutWorld />
+      <div class="contact-darkness" aria-hidden="true"></div>
+      <ContactWorld />
+      <div class="entrance-bottom">
+        <a class="threshold-invitation" href="#philosophy"><span>Scroll</span><span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="threshold-progress" aria-hidden="true"><span></span></div>
+    </div>
+    <svg class="ripple-definitions" aria-hidden="true" width="0" height="0">
+      <defs>
+        <filter id="copy-mist" x="-15%" y="-25%" width="130%" height="150%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency=".012 .028" numOctaves="2" seed="23" result="mist-noise" />
+          <feOffset in="mist-noise" dx="0" dy="0" result="moving-mist" />
+          <feColorMatrix in="moving-mist" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  4 0 0 0 1" result="mist-mask" />
+          <feComposite in="SourceGraphic" in2="mist-mask" operator="in" result="eroding-type" />
+          <feDisplacementMap in="eroding-type" in2="moving-mist" scale="0" xChannelSelector="R" yChannelSelector="G" result="scattered-type" />
+          <feGaussianBlur in="scattered-type" stdDeviation="0" />
+        </filter>
+        <filter id="copy-water" x="-5%" y="-10%" width="110%" height="120%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency=".009 .024" numOctaves="2" seed="14" result="water-noise" />
+          <feOffset in="water-noise" dx="0" dy="0" result="flowing-noise" />
+          <feDisplacementMap in="SourceGraphic" in2="flowing-noise" scale="7" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+  </section>
 </Layout>

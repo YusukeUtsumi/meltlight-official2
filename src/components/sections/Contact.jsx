@@ -11,9 +11,8 @@ export default function Contact() {
 
                 <p className="contact-kicker">BEGIN BEFORE THE ANSWER</p>
                 <h2 className="contact-heading">What is still<br />without a shape?</h2>
-                <p className="contact-note">Bring the question. We can begin there.</p>
 
-                <a href="https://tally.so/r/mRXxjj" className="contact-button" target="_blank" rel="noopener noreferrer">
+                <a href="mailto:yusuke@meltlight.art" className="contact-button">
                     <span>INQUIRE</span>
                 </a>
 

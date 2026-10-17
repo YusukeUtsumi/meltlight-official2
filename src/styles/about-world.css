@@ -1,0 +1,36 @@
+/* The author appears along the same causeway, after the commissioned work. */
+.journey-enhanced .threshold { height:2460svh; }
+.journey-enhanced .journey-anchor-about { top:2184svh; }
+.courtyard-about { position:relative; min-height:100svh; padding:18svh var(--gutter) 10svh; color:var(--bone); background:transparent; }
+.courtyard-about .about-statement { max-width:1000px; }
+.courtyard-about h2 { margin:0; max-width:1120px; font:400 clamp(56px,min(5.6vw,10svh),94px)/1.04 var(--display); letter-spacing:-.025em; text-wrap:balance; text-shadow:0 2px 18px #080c1499,0 1px 4px #080c14; }
+.courtyard-about h2 em { display:block; padding:0; color:var(--bone); }
+.courtyard-about .about-identity { display:flex; flex-direction:column; align-items:end; gap:12px; margin-top:34px; text-align:right; text-shadow:0 2px 12px #080c14; }
+.courtyard-about .about-artist-name { font:400 clamp(38px,3.8vw,54px)/1 var(--display); letter-spacing:-.025em; }
+.courtyard-about .about-credentials { font:400 clamp(18px,1.5vw,23px)/1.65 var(--body); color:var(--bone); }
+.journey-enhanced .courtyard-about { position:absolute; inset:0; height:100%; min-height:0; z-index:3; opacity:var(--about-opacity,0); filter:blur(var(--about-blur,12px)); pointer-events:none; }
+.journey-enhanced .courtyard-about .about-identity { opacity:var(--about-identity,0); filter:blur(var(--about-identity-blur,8px)); }
+.contact-bottom .text-link { font-size:clamp(17px,1.6vw,23px); }
+@media (max-width:600px) {
+  .site-header nav a[href="#about"] { display:inline; }
+  .journey-enhanced .threshold { height:2250svh; }
+  .journey-enhanced .journey-anchor-about { top:1989svh; }
+  .courtyard-about { padding:18svh 22px 10svh; }
+  .courtyard-about h2 { font-size:clamp(32px,min(9.8vw,5.6svh),52px); line-height:1.08; letter-spacing:-.02em; }
+  .courtyard-about h2 em { margin-top:.2em; }
+  .courtyard-about .about-identity { gap:12px; margin-top:32px; }
+  .courtyard-about .about-artist-name { font-size:37px; }
+  .courtyard-about .about-credentials { font-size:17px; line-height:1.65; }
+  .courtyard-experiences .commission-link { gap:32px; }
+}
+@media (max-height:740px) and (max-width:600px) {
+  .courtyard-about { padding-top:15svh; }
+  .courtyard-about h2 { font-size:clamp(30px,9.4vw,38px); line-height:1.04; }
+  .courtyard-about .about-artist-name { font-size:34px; }
+  .courtyard-about .about-identity { gap:10px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  html.journey-enhanced .threshold { height:auto; }
+  .journey-enhanced .courtyard-about { position:relative; height:auto; min-height:100svh; opacity:1; filter:none; pointer-events:auto; padding-block:80px; }
+  .journey-enhanced .courtyard-about .about-identity { opacity:1; filter:none; }
+}
